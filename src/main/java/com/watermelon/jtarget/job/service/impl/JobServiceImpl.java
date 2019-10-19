@@ -69,18 +69,21 @@ public class JobServiceImpl implements JobService {
         List<JobPreferDTO> jobs = jobDao.findAllJobs(key);
 
         for (JobPreferDTO job : jobs) {
+            int domain_weight = 10;
+            int profession_weight = 100;
+            int experience_weight = 2;
             int weight = 0;
             if (!StringUtils.isEmpty(userBean.getDomain())
                     && userBean.getDomain().contains(job.getDomain())) {
-                weight++;
+                weight = weight + domain_weight;
             }
             if (!StringUtils.isEmpty(userBean.getProfession())
                     && userBean.getProfession().contains(job.getProfession())) {
-                weight++;
+                weight = weight + profession_weight;
             }
             if (job.getExperienceMin() <= userBean.getExperience()
                     && job.getExperienceMax() >= userBean.getExperience()) {
-                weight++;
+                weight = userBean.getExperience() + weight;
             }
             job.setWeights(weight);
         }
