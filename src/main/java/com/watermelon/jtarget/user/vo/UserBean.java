@@ -14,16 +14,46 @@ public class UserBean implements Serializable {
 
     private String userType;
 
-    private String userPrefer;
+    private String domain;
+
+    private String profession;
+
+    private int experience;
+
+    private String softSkills;
 
     private String token;
 
-    public String getUserPrefer() {
-        return userPrefer;
+    public String getDomain() {
+        return domain;
     }
 
-    public void setUserPrefer(String userPrefer) {
-        this.userPrefer = userPrefer;
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public String getSoftSkills() {
+        return softSkills;
+    }
+
+    public void setSoftSkills(String softSkills) {
+        this.softSkills = softSkills;
     }
 
     public String getUserId() {
@@ -73,6 +103,10 @@ public class UserBean implements Serializable {
                 ", userAccount='" + userAccount + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userType='" + userType + '\'' +
+                ", domain='" + domain + '\'' +
+                ", profession='" + profession + '\'' +
+                ", experience=" + experience +
+                ", softSkills='" + softSkills + '\'' +
                 ", token='" + token + '\'' +
                 '}';
     }

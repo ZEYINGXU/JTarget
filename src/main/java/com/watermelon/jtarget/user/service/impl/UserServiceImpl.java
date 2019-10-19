@@ -107,7 +107,10 @@ public class UserServiceImpl implements UserService {
         userBean.setUserAccount(user.getUserAccount());
         userBean.setUserName(user.getUserName());
         userBean.setUserType(user.getUserType());
-        userBean.setUserPrefer(user.getUserPrefer());
+        userBean.setDomain(user.getDomain());
+        userBean.setProfession(user.getProfession());
+        userBean.setExperience(user.getExperience());
+        userBean.setSoftSkills(user.getSoftSkills());
         return userBean;
     }
 }

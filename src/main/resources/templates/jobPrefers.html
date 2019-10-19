@@ -20,10 +20,9 @@
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
                         <li><a href="/job/list">JOB LIST</a></li>
-                        <li><a href="/job/list/prefer">RECOMMEND</a></li>
-                        <li><a href="/login">LOGIN</a></li>
-                        <li><a href="/register">REGISTERED</a></li>
+                        <li class="active"><a href="/job/list/prefer">RECOMMEND</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
                     </ul>
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
@@ -46,21 +45,15 @@
     </div>
     <div class="container">
         <div class="page-header">
-            <h1>Job List</h1>
+            <h1>Recommend Job List</h1>
         </div>
     </div>
     <div class="container">
 
-        <form role="form" method="get" action="/job/list">
+        <form role="form" method="get" action="/job/list/prefer">
             <div class="row">
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Name" name="jobName">
-                </div>
-                <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Region" name="jobRegion">
-                </div>
-                <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Salary" name="jobSalary">
+                    <input type="text" class="form-control" placeholder="search key" name="key">
                 </div>
                 <button type="submit" class="btn btn-default">search</button>
             </div>
@@ -97,7 +90,7 @@
         <nav>
             <ul class="pagination">
                 <li>
-                    <a th:if="${not isFirstPage}" th:href="@{${'/job/list'}(currentPage=(${pageNum} -1),pageSize=${pageSize})}"
+                    <a th:if="${not isFirstPage}" th:href="@{${'/job/list/prefer'}(currentPage=(${pageNum} -1),pageSize=${pageSize})}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
@@ -112,13 +105,13 @@
                     </a>
 
                     <a th:if="${not (pageNum eq pageNo)}"
-                       th:href="@{${'/job/list'}(currentPage=${pageNo},pageSize=${pageSize})}">
+                       th:href="@{${'/job/list/prefer'}(currentPage=${pageNo},pageSize=${pageSize})}">
                         <span th:text="${pageNo}"></span>
                     </a>
                 </li>
 
                 <li>
-                    <a th:if="${not isLastPage}" th:href="@{${'/job/list'}(currentPage=${pageNum+1},pageSize=${pageSize})}"
+                    <a th:if="${not isLastPage}" th:href="@{${'/job/list/prefer'}(currentPage=${pageNum+1},pageSize=${pageSize})}"
                        aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
@@ -135,21 +128,7 @@
     <div class="bg-primary">
         <div class="container">
             <h1></h1>
-            <form role="form" method="get" action="/job/list">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Name" name="jobName">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Region" name="jobRegion">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Salary" name="jobSalary">
-                    </div>
-                    <button type="submit" class="btn btn-default">search</button>
-                </div>
-                <h1></h1>
-            </form>
+
         </div>
     </div>
 </div>

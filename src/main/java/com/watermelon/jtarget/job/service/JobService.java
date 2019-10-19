@@ -2,6 +2,7 @@ package com.watermelon.jtarget.job.service;
 
 import com.watermelon.jtarget.common.pager.PageInfo;
 import com.watermelon.jtarget.job.dto.JobDTO;
+import com.watermelon.jtarget.user.vo.UserBean;
 
 
 public interface JobService {
@@ -16,5 +17,5 @@ public interface JobService {
                       String jobName, String jobRegion, String jobSalary);
 
 
-    PageInfo findJobs(Integer currentPage, Integer pageSize, String prefer);
+    PageInfo findJobs(Integer currentPage, Integer pageSize, UserBean userBean, String key);
 }

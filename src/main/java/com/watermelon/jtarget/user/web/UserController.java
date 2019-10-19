@@ -107,7 +107,7 @@ public class UserController {
     public ModelAndView updateUser(@RequestParam String userId, ModelAndView modelAndView) {
         UserBean userInfo = userService.findUserById(userId);
         modelAndView.addObject("userInfo", userInfo);
-        modelAndView.setViewName("/user");
+        modelAndView.setViewName("user");
         return modelAndView;
     }
 
@@ -117,9 +117,11 @@ public class UserController {
         user.setUserAccount(param.get("userAccount"));
         user.setUserName(param.get("userName"));
         user.setUserType(param.get("userType"));
-        user.setUserPrefer(param.get("userPrefer"));
-        System.out.println(param.get("password"));
         user.setUserPassword(md5Utils.encoding(param.get("password")));
+        user.setDomain(param.get("domain"));
+        user.setProfession(param.get("profession"));
+        user.setExperience(param.get("experience") == null ? 0 : Integer.valueOf(param.get("experience")));
+
         if (StringUtils.isEmpty(user.getUserAccount())) {
             UserBean userInfo = userService.findUserByAccount(user.getUserAccount());
             modelAndView.addObject("error", "Parameter error");
@@ -160,9 +162,16 @@ public class UserController {
 
         userService.updateUser(user);
 
-        UserBean userInfo = userService.findUserByAccount(user.getUserAccount());
-        modelAndView.addObject("userInfo", userInfo);
-        modelAndView.setViewName("user");
+        PageInfo pageInfo = userService.findUsers(1, 10, null);
+
+        modelAndView.addObject("pageInfo", pageInfo);
+        modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+        modelAndView.addObject("pageSize", pageInfo.getPageSize());
+        modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+        modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+        modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+
+        modelAndView.setViewName("users");
         return modelAndView;
     }
 }

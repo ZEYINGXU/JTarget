@@ -55,18 +55,7 @@ public class LoginController {
     @GetMapping("register")
     public ModelAndView register(ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("userBean") != null) {
-
-            PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
-
-            modelAndView.addObject("pageInfo", pageInfo);
-            modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
-            modelAndView.addObject("pageSize", pageInfo.getPageSize());
-            modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
-            modelAndView.addObject("totalPages", pageInfo.getTotalPage());
-            modelAndView.addObject("isLastPage", pageInfo.isLastPage());
-
-            modelAndView.setViewName("jobs");
-            return modelAndView;
+            session.removeAttribute("userBean");
         }
         modelAndView.setViewName("registered");
         return modelAndView;
@@ -141,8 +130,9 @@ public class LoginController {
         user.setUserAccount(param.get("userAccount"));
         user.setUserPassword(param.get("password"));
         user.setUserType(param.get("userType"));
-        System.out.println(param.get("userPrefer"));
-        user.setUserPrefer(param.get("userPrefer"));
+        user.setDomain(param.get("domain"));
+        user.setProfession(param.get("profession"));
+        user.setExperience(param.get("experience") == null ? 0 : Integer.valueOf(param.get("experience")));
         if (StringUtils.isEmpty(user.getUserAccount())) {
             modelAndView.addObject("error", "Parameter error");
             modelAndView.setViewName("registered");

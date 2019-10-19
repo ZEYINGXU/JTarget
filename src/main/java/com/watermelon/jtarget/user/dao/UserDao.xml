@@ -11,7 +11,10 @@
           user_name userName,
           user_password userPassword,
           user_type userType,
-          user_prefer userPrefer
+          domain domain,
+          profession profession,
+          experience experience,
+          soft_skills softSkills
         FROM jtarget_user
         WHERE
           user_account = #{userAccount}
@@ -24,7 +27,10 @@
           user_name userName,
           user_password userPassword,
           user_type userType,
-          user_prefer userPrefer
+          domain domain,
+          profession profession,
+          experience experience,
+          soft_skills softSkills
         FROM jtarget_user
         WHERE
           user_id = #{userId}
@@ -38,7 +44,10 @@
           user_name,
           user_password,
           user_type,
-          user_prefer
+          domain,
+          profession,
+          experience,
+          soft_skills
         )
           VALUES
         (
@@ -47,7 +56,10 @@
           #{userName},
           #{userPassword},
           #{userType},
-          #{userPrefer}
+          #{domain},
+          #{profession},
+          #{experience},
+          #{softSkills}
         )
     </insert>
     
@@ -57,7 +69,10 @@
           user_name = #{userName},
           user_password = #{userPassword},
           user_type = #{userType},
-          user_prefer = #{userPrefer}
+          domain = #{domain},
+          profession = #{profession},
+          experience = #{experience},
+          soft_skills = #{softSkills}
         WHERE
           user_account = #{userAccount}
     </update>
@@ -83,9 +98,9 @@
             user_type != '3'
             <if test="key != null and key != ''.toString()">
                 AND  (
-                user_account like '%'||key||'%'
-                OR user_name like '%'||key||'%'
-                OR user_type like '%'||key||'%'
+                user_account CONCAT('%', #{key}, '%')
+                OR user_name CONCAT('%', #{key}, '%')
+                OR user_type CONCAT('%', #{key}, '%')
                 )
             </if>
         </where>
@@ -97,16 +112,19 @@
         user_account userAccount,
         user_name userName,
         user_type userType,
-        user_prefer userPrefer
+        domain domain,
+        profession profession,
+        experience experience,
+        soft_skills softSkills
         FROM
         jtarget_user
         <where>
             user_type != '3'
             <if test="key != null and key != ''.toString()">
                 AND (
-                user_account like '%'||key||'%'
-                OR user_name like '%'||key||'%'
-                OR user_type like '%'||key||'%'
+                user_account CONCAT('%', #{key}, '%')
+                OR user_name CONCAT('%', #{key}, '%')
+                OR user_type CONCAT('%', #{key}, '%')
                 )
             </if>
         </where>

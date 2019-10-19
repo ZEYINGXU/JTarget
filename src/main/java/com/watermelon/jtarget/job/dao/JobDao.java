@@ -1,6 +1,7 @@
 package com.watermelon.jtarget.job.dao;
 
 import com.watermelon.jtarget.job.dto.JobDTO;
+import com.watermelon.jtarget.job.dto.JobPreferDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,12 +18,6 @@ public interface JobDao {
 
     int deleteJob(@Param("jobId") String jobId);
 
-    int findJobUsePreferCount(@Param("prefer") String prefer);
-
-    List<JobDTO> findJobsUsePrefer(@Param("fromIndex") Integer fromIndex,
-                                   @Param("pageSize") Integer pageSize,
-                                   @Param("prefer") String prefer);
-
     int findJobCount(@Param("jobName") String jobName,
                      @Param("jobRegion") String jobRegion,
                      @Param("jobSalary") String jobSalary);
@@ -32,4 +27,6 @@ public interface JobDao {
                           @Param("jobName") String jobName,
                           @Param("jobRegion") String jobRegion,
                           @Param("jobSalary") String jobSalary);
+
+    List<JobPreferDTO> findAllJobs(@Param("key") String key);
 }

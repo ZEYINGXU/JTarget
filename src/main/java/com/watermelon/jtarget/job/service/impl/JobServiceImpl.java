@@ -4,9 +4,16 @@ import com.watermelon.jtarget.common.pager.PageInfo;
 import com.watermelon.jtarget.common.util.UUIDUtils;
 import com.watermelon.jtarget.job.dao.JobDao;
 import com.watermelon.jtarget.job.dto.JobDTO;
+import com.watermelon.jtarget.job.dto.JobPreferDTO;
 import com.watermelon.jtarget.job.service.JobService;
+import com.watermelon.jtarget.user.vo.UserBean;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.Collections;
+import java.util.List;
 
 
 @Service
@@ -55,14 +62,36 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public PageInfo findJobs(Integer currentPage, Integer pageSize, String prefer) {
+    public PageInfo findJobs(Integer currentPage, Integer pageSize, UserBean userBean, String key) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCurrentPage(currentPage);
         pageInfo.setPageSize(pageSize);
-        int totalCount = jobDao.findJobUsePreferCount(prefer);
+        List<JobPreferDTO> jobs = jobDao.findAllJobs(key);
+
+        for (JobPreferDTO job : jobs) {
+            int weight = 0;
+            if (!StringUtils.isEmpty(userBean.getDomain())
+                    && userBean.getDomain().contains(job.getDomain())) {
+                weight++;
+            }
+            if (!StringUtils.isEmpty(userBean.getProfession())
+                    && userBean.getProfession().contains(job.getProfession())) {
+                weight++;
+            }
+            if (job.getExperienceMin() <= userBean.getExperience()
+                    && job.getExperienceMax() >= userBean.getExperience()) {
+                weight++;
+            }
+            job.setWeights(weight);
+        }
+        Collections.sort(jobs);
+
+        int totalCount = jobs.size();
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
         pageInfo.setTotalPage(totalPage);
-        pageInfo.setData(jobDao.findJobsUsePrefer((currentPage - 1) * pageSize, pageSize, prefer));
+        int start = (currentPage - 1) * pageSize;
+        int end = start + pageSize;
+        pageInfo.setData(jobs.subList(start, end > jobs.size() ? jobs.size() : end));
         pageInfo.setFirstPage(currentPage == 1);
         pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
         return pageInfo;

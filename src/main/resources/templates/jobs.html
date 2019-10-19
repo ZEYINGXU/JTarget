@@ -19,19 +19,17 @@
                 <div>
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
-                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li class="active"><a href="/job/list">JOB LIST</a></li>
                         <li><a href="/job/list/prefer">RECOMMEND</a></li>
-                        <li><a href="/login">LOGIN</a></li>
-                        <li><a href="/register">REGISTERED</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
                     </ul>
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
-                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li class="active"><a href="/job/list">JOB LIST</a></li>
                         <li><a href="/job/addJob">POST ONE JOB</a></li>
-                        <li><a href="/login">LOGIN</a></li>
-                        <li><a href="/register">REGISTERED</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
                     </ul>
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('3')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
@@ -77,17 +75,22 @@
         <table class="table">
             <thead>
             <tr>
-                <th>job name</th>
-                <th>region</th>
-                <th>salary</th>
+                <th>job list</th>
                 <th>operation</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="job : ${pageInfo.data}">
-                <td th:text="${job.jobName}"></td>
-                <td th:text="${job.jobRegion}"></td>
-                <td th:text="${job.jobSalary}"></td>
+                <td>
+                    <p th:text="'jobName: '+${job.jobName}">jobName</p>
+                    <p th:text="'jobRegion: ' + ${job.jobRegion}"></p>
+                    <p th:text="'jobSalary: ' + ${job.jobSalary}"></p>
+                    <p th:text="'jobDetail: ' + ${job.jobDetail}"></p>
+                    <p th:text="'jobContact: ' + ${job.jobContact}"></p>
+                </td>
+                <!--<td th:text="${job.jobName}"></td>-->
+                <!--<td th:text="${job.jobRegion}"></td>-->
+                <!--<td th:text="${job.jobSalary}"></td>-->
                 <td>
                     <a th:href="@{${'/job/detail'}(jobId=(${job.jobId}))}">see details</a>
                 </td>
@@ -135,21 +138,7 @@
     <div class="bg-primary">
         <div class="container">
             <h1></h1>
-            <form role="form" method="get" action="/job/list">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Name" name="jobName">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Region" name="jobRegion">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Salary" name="jobSalary">
-                    </div>
-                    <button type="submit" class="btn btn-default">search</button>
-                </div>
-                <h1></h1>
-            </form>
+
         </div>
     </div>
 </div>

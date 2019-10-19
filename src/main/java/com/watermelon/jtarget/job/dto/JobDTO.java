@@ -16,9 +16,59 @@ public class JobDTO {
 
     private String jobDetail;
 
+    private String domain;
+
+    private String profession;
+
+    private int experienceMin;
+
+    private int experienceMax;
+
+    private String softSkills;
+
     private String createBy;
 
     private Date createDate;
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public int getExperienceMin() {
+        return experienceMin;
+    }
+
+    public void setExperienceMin(int experienceMin) {
+        this.experienceMin = experienceMin;
+    }
+
+    public int getExperienceMax() {
+        return experienceMax;
+    }
+
+    public void setExperienceMax(int experienceMax) {
+        this.experienceMax = experienceMax;
+    }
+
+    public String getSoftSkills() {
+        return softSkills;
+    }
+
+    public void setSoftSkills(String softSkills) {
+        this.softSkills = softSkills;
+    }
 
     public String getJobId() {
         return jobId;

@@ -43,7 +43,11 @@ public class JobController {
         }
         job.setJobContact(param.get("contact"));
         job.setJobDetail(param.get("detail"));
-
+        job.setDomain(param.get("domain"));
+        job.setProfession(param.get("profession"));
+        job.setExperienceMin(param.get("experienceMin") == null ? null : Integer.valueOf(param.get("experienceMin")));
+        job.setExperienceMax(param.get("experienceMax") == null ? null : Integer.valueOf(param.get("experienceMax")));
+        job.setSoftSkills(param.get("softSkills"));
         UserBean userBean = (UserBean) session.getAttribute("userBean");
         job.setCreateBy(userBean.getUserId());
 
@@ -87,6 +91,7 @@ public class JobController {
     public ModelAndView findJobsUsePrefer
                                 (@RequestParam(required = false) Integer currentPage,
                                  @RequestParam(required = false) Integer pageSize,
+                                 @RequestParam(required = false) String key,
                                  HttpSession session, ModelAndView modelAndView) {
 
         if (currentPage == null || currentPage < 0) {
@@ -96,7 +101,8 @@ public class JobController {
             pageSize = 10;
         }
         UserBean userBean = (UserBean) session.getAttribute("userBean");
-        PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, userBean.getUserPrefer());
+
+        PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, userBean, key);
 
         modelAndView.addObject("pageInfo", pageInfo);
         modelAndView.addObject("pageNum", pageInfo.getCurrentPage());

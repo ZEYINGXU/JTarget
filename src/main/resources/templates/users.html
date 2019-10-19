@@ -35,9 +35,8 @@
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('3')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
                         <li><a href="/user/list">USER LIST</a></li>
-                        <li><a href="/login">LOGIN</a></li>
-                        <li><a href="/register">REGISTERED</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
                     </ul>
                 </div>
             </div>

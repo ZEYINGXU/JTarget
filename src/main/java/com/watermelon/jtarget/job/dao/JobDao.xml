@@ -11,6 +11,11 @@
           job_name jobName,
           job_contact jobContact,
           job_detail jobDetail,
+          domain domain,
+          profession profession,
+          experience_min experienceMin,
+          experience_max experienceMax,
+          soft_skills softSkills,
           create_by createBy,
           create_date createDate
         FROM
@@ -28,6 +33,11 @@
           job_name,
           job_contact,
           job_detail,
+          domain,
+          profession,
+          experience_min,
+          experience_max,
+          soft_skills,
           create_by,
           create_date
         )
@@ -39,6 +49,11 @@
           #{jobName},
           #{jobContact},
           #{jobDetail},
+          #{domain},
+          #{profession},
+          #{experienceMin},
+          #{experienceMax},
+          #{softSkills},
           #{createBy},
           #{createDate}
         )
@@ -65,36 +80,6 @@
           job_id = #{jobId}
     </update>
 
-    <select id="findJobUsePreferCount" resultType="java.lang.Integer">
-        SELECT
-        count(1)
-        FROM
-        jtarget_job
-        <where>
-            1 = 1
-            <if test="prefer != null and prefer != ''.toString()">
-                AND job_name like '%'||#{prefer}||'%'
-            </if>
-        </where>
-    </select>
-
-    <select id="findJobsUsePrefer" resultType="com.watermelon.jtarget.job.dto.JobDTO">
-        SELECT
-        job_id jobId,
-        job_region jobRegion,
-        job_salary jobSalary,
-        job_name jobName
-        FROM
-        jtarget_job
-        <where>
-            1 = 1
-            <if test="prefer != null and prefer != ''.toString()">
-                AND job_name like '%'||#{prefer}||'%'
-            </if>
-        </where>
-        ORDER BY job_id ASC
-        LIMIT #{fromIndex}, #{pageSize}
-    </select>
 
     <select id="findJobCount" resultType="java.lang.Integer">
         SELECT
@@ -120,22 +105,54 @@
           job_id jobId,
           job_region jobRegion,
           job_salary jobSalary,
-          job_name jobName
+          job_name jobName,
+          job_contact jobContact,
+          job_detail jobDetail
         FROM
           jtarget_job
         <where>
             1 = 1
             <if test="jobName != null and jobName != ''.toString()">
-                AND job_name like '%'||#{jobName}||'%'
+                AND job_name like CONCAT('%', #{jobName}, '%')
             </if>
             <if test="jobRegion != null and jobRegion != ''.toString()">
-                AND job_region like '%'||#{jobRegion}||'%'
+                AND job_region like CONCAT('%', #{jobRegion}, '%')
             </if>
             <if test="jobSalary != null and jobSalary != ''.toString()">
-                AND job_salary like '%'||#{jobSalary}||'%'
+                AND job_salary like CONCAT('%', #{jobSalary}, '%')
             </if>
         </where>
         ORDER BY job_id ASC
         LIMIT #{fromIndex}, #{pageSize}
+    </select>
+
+    <select id="findAllJobs" resultType="com.watermelon.jtarget.job.dto.JobPreferDTO">
+        SELECT
+          job_id jobId,
+          job_region jobRegion,
+          job_salary jobSalary,
+          job_name jobName,
+          job_contact jobContact,
+          job_detail jobDetail,
+          domain domain,
+          profession profession,
+          experience_min experienceMin,
+          experience_max experienceMax,
+          soft_skills softSkills,
+          create_by createBy,
+          create_date createDate
+        FROM
+          jtarget_job
+        WHERE
+          1 = 1
+          <if test="key != null">
+              AND
+              (job_region like CONCAT('%', #{key}, '%')
+              OR job_salary like CONCAT('%', #{key}, '%')
+              OR job_name like CONCAT('%', #{key}, '%')
+              OR job_contact like CONCAT('%', #{key}, '%')
+              OR job_detail like CONCAT('%', #{key}, '%')
+              )
+          </if>
     </select>
 </mapper>
