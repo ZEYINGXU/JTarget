@@ -10,7 +10,8 @@
           user_account userAccount,
           user_name userName,
           user_password userPassword,
-          user_type userType
+          user_type userType,
+          user_prefer userPrefer
         FROM jtarget_user
         WHERE
           user_account = #{userAccount}
@@ -22,7 +23,8 @@
           user_account userAccount,
           user_name userName,
           user_password userPassword,
-          user_type userType
+          user_type userType,
+          user_prefer userPrefer
         FROM jtarget_user
         WHERE
           user_id = #{userId}
@@ -35,7 +37,8 @@
           user_account,
           user_name,
           user_password,
-          user_type
+          user_type,
+          user_prefer
         )
           VALUES
         (
@@ -43,7 +46,8 @@
           #{userAccount},
           #{userName},
           #{userPassword},
-          #{userType}
+          #{userType},
+          #{userPrefer}
         )
     </insert>
     
@@ -52,10 +56,10 @@
         SET
           user_name = #{userName},
           user_password = #{userPassword},
-          user_type = #{userType}
+          user_type = #{userType},
+          user_prefer = #{userPrefer}
         WHERE
-          user_id = #{userId}
-        AND user_account = #{userAccount}
+          user_account = #{userAccount}
     </update>
 
     <delete id="deleteUserById">
@@ -92,7 +96,8 @@
         user_id userId,
         user_account userAccount,
         user_name userName,
-        user_type userType
+        user_type userType,
+        user_prefer userPrefer
         FROM
         jtarget_user
         <where>

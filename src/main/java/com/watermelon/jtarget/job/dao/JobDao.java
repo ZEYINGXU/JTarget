@@ -17,9 +17,19 @@ public interface JobDao {
 
     int deleteJob(@Param("jobId") String jobId);
 
-    int findJobCount(@Param("key") String key);
+    int findJobUsePreferCount(@Param("prefer") String prefer);
+
+    List<JobDTO> findJobsUsePrefer(@Param("fromIndex") Integer fromIndex,
+                                   @Param("pageSize") Integer pageSize,
+                                   @Param("prefer") String prefer);
+
+    int findJobCount(@Param("jobName") String jobName,
+                     @Param("jobRegion") String jobRegion,
+                     @Param("jobSalary") String jobSalary);
 
     List<JobDTO> findJobs(@Param("fromIndex") Integer fromIndex,
                           @Param("pageSize") Integer pageSize,
-                          @Param("key") String key);
+                          @Param("jobName") String jobName,
+                          @Param("jobRegion") String jobRegion,
+                          @Param("jobSalary") String jobSalary);
 }

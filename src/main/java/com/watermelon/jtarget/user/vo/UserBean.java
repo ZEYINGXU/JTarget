@@ -14,7 +14,17 @@ public class UserBean implements Serializable {
 
     private String userType;
 
+    private String userPrefer;
+
     private String token;
+
+    public String getUserPrefer() {
+        return userPrefer;
+    }
+
+    public void setUserPrefer(String userPrefer) {
+        this.userPrefer = userPrefer;
+    }
 
     public String getUserId() {
         return userId;

@@ -12,6 +12,16 @@ public class UserDTO {
 
     private String userType;
 
+    private String userPrefer;
+
+    public String getUserPrefer() {
+        return userPrefer;
+    }
+
+    public void setUserPrefer(String userPrefer) {
+        this.userPrefer = userPrefer;
+    }
+
     public String getUserId() {
         return userId;
     }

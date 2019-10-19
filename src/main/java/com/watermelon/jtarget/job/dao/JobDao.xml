@@ -65,19 +65,53 @@
           job_id = #{jobId}
     </update>
 
+    <select id="findJobUsePreferCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        jtarget_job
+        <where>
+            1 = 1
+            <if test="prefer != null and prefer != ''.toString()">
+                AND job_name like '%'||#{prefer}||'%'
+            </if>
+        </where>
+    </select>
+
+    <select id="findJobsUsePrefer" resultType="com.watermelon.jtarget.job.dto.JobDTO">
+        SELECT
+        job_id jobId,
+        job_region jobRegion,
+        job_salary jobSalary,
+        job_name jobName
+        FROM
+        jtarget_job
+        <where>
+            1 = 1
+            <if test="prefer != null and prefer != ''.toString()">
+                AND job_name like '%'||#{prefer}||'%'
+            </if>
+        </where>
+        ORDER BY job_id ASC
+        LIMIT #{fromIndex}, #{pageSize}
+    </select>
+
     <select id="findJobCount" resultType="java.lang.Integer">
         SELECT
           count(1)
         FROM
           jtarget_job
         <where>
-          <if test="key != null and key != ''.toString()">
-              job_region like '%'||key||'%'
-              OR job_salary like '%'||key||'%'
-              OR job_name like '%'||key||'%'
-              OR job_contact like '%'||key||'%'
-              OR job_detail like '%'||key||'%'
-          </if>
+            1 = 1
+            <if test="jobName != null and jobName != ''.toString()">
+                AND job_name like '%'||#{jobName}||'%'
+            </if>
+            <if test="jobRegion != null and jobRegion != ''.toString()">
+                AND job_region like '%'||#{jobRegion}||'%'
+            </if>
+            <if test="jobSalary != null and jobSalary != ''.toString()">
+                AND job_salary like '%'||#{jobSalary}||'%'
+            </if>
         </where>
     </select>
 
@@ -90,12 +124,15 @@
         FROM
           jtarget_job
         <where>
-            <if test="key != null and key != ''.toString()">
-                job_region like '%'||key||'%'
-                OR job_salary like '%'||key||'%'
-                OR job_name like '%'||key||'%'
-                OR job_contact like '%'||key||'%'
-                OR job_detail like '%'||key||'%'
+            1 = 1
+            <if test="jobName != null and jobName != ''.toString()">
+                AND job_name like '%'||#{jobName}||'%'
+            </if>
+            <if test="jobRegion != null and jobRegion != ''.toString()">
+                AND job_region like '%'||#{jobRegion}||'%'
+            </if>
+            <if test="jobSalary != null and jobSalary != ''.toString()">
+                AND job_salary like '%'||#{jobSalary}||'%'
             </if>
         </where>
         ORDER BY job_id ASC

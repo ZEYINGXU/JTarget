@@ -20,6 +20,7 @@
                     <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
                         <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
                         <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/job/list/prefer">RECOMMEND</a></li>
                         <li><a href="/login">LOGIN</a></li>
                         <li><a href="/register">REGISTERED</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
@@ -49,16 +50,16 @@
         </div>
     </div>
     <div class="container">
-        <form role="form">
+        <form role="form" method="get" action="/job/list">
             <div class="row">
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Name">
+                    <input type="text" class="form-control" placeholder="Job Name" name="jobName">
                 </div>
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Region">
+                    <input type="text" class="form-control" placeholder="Job Region" name="jobRegion">
                 </div>
                 <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Salary">
+                    <input type="text" class="form-control" placeholder="Job Salary" name="jobSalary">
                 </div>
                 <button type="submit" class="btn btn-default">search</button>
             </div>
@@ -107,16 +108,16 @@
     <div class="bg-primary">
         <div class="container">
             <h1></h1>
-            <form role="form">
+            <form role="form" method="get" action="/job/list">
                 <div class="row">
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Name">
+                        <input type="text" class="form-control" placeholder="Job Name" name="jobName">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Region">
+                        <input type="text" class="form-control" placeholder="Job Region" name="jobRegion">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Salary">
+                        <input type="text" class="form-control" placeholder="Job Salary" name="jobSalary">
                     </div>
                     <button type="submit" class="btn btn-default">search</button>
                 </div>

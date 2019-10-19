@@ -5,6 +5,7 @@ import com.watermelon.jtarget.job.service.JobService;
 import com.watermelon.jtarget.login.service.LoginService;
 import com.watermelon.jtarget.user.dto.UserDTO;
 import com.watermelon.jtarget.user.enumerate.UserTypeEnum;
+import com.watermelon.jtarget.user.service.UserService;
 import com.watermelon.jtarget.user.vo.UserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,14 @@ public class LoginController {
     @Autowired
     private JobService jobService;
 
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping("login")
     public ModelAndView login(ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("userBean") != null) {
-            PageInfo pageInfo = jobService.findJobs(1, 10, null);
+            PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
 
             modelAndView.addObject("pageInfo", pageInfo);
             modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
@@ -51,7 +56,7 @@ public class LoginController {
     public ModelAndView register(ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("userBean") != null) {
 
-            PageInfo pageInfo = jobService.findJobs(1, 10, null);
+            PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
 
             modelAndView.addObject("pageInfo", pageInfo);
             modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
@@ -100,18 +105,32 @@ public class LoginController {
         }
         modelAndView.addObject("userBean", userBean);
         session.setAttribute("userBean", userBean);
+        if ("3".equals(userBean.getUserType())) {
+            PageInfo pageInfo = userService.findUsers(1, 10, null);
 
-        PageInfo pageInfo = jobService.findJobs(1, 10, null);
+            modelAndView.addObject("pageInfo", pageInfo);
+            modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+            modelAndView.addObject("pageSize", pageInfo.getPageSize());
+            modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+            modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+            modelAndView.addObject("isLastPage", pageInfo.isLastPage());
 
-        modelAndView.addObject("pageInfo", pageInfo);
-        modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
-        modelAndView.addObject("pageSize", pageInfo.getPageSize());
-        modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
-        modelAndView.addObject("totalPages", pageInfo.getTotalPage());
-        modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+            modelAndView.setViewName("users");
 
-        modelAndView.setViewName("jobs");
-        return modelAndView;
+            return modelAndView;
+        } else {
+            PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
+
+            modelAndView.addObject("pageInfo", pageInfo);
+            modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+            modelAndView.addObject("pageSize", pageInfo.getPageSize());
+            modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+            modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+            modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+
+            modelAndView.setViewName("jobs");
+            return modelAndView;
+        }
     }
 
 
@@ -122,6 +141,8 @@ public class LoginController {
         user.setUserAccount(param.get("userAccount"));
         user.setUserPassword(param.get("password"));
         user.setUserType(param.get("userType"));
+        System.out.println(param.get("userPrefer"));
+        user.setUserPrefer(param.get("userPrefer"));
         if (StringUtils.isEmpty(user.getUserAccount())) {
             modelAndView.addObject("error", "Parameter error");
             modelAndView.setViewName("registered");
@@ -160,7 +181,7 @@ public class LoginController {
 
         session.setAttribute("userBean", userBean);
 
-        PageInfo pageInfo = jobService.findJobs(1, 10, null);
+        PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
 
         modelAndView.addObject("pageInfo", pageInfo);
         modelAndView.addObject("pageNum", pageInfo.getCurrentPage());

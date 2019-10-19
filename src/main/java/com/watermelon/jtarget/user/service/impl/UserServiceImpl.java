@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(UserDTO user) {
-        UserDTO userExist = userDao.findUserByUserId(user.getUserId());
+        UserDTO userExist = userDao.findUserByUserAccount(user.getUserAccount());
         if ( ! userExist.getUserAccount().equals(user.getUserAccount())) {
              return false;
         }
@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
         userBean.setUserAccount(user.getUserAccount());
         userBean.setUserName(user.getUserName());
         userBean.setUserType(user.getUserType());
+        userBean.setUserPrefer(user.getUserPrefer());
         return userBean;
     }
 }

@@ -41,14 +41,28 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public PageInfo findJobs(Integer currentPage, Integer pageSize, String key) {
+    public PageInfo findJobs(Integer currentPage, Integer pageSize, String jobName, String jobRegion, String jobSalary) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setCurrentPage(currentPage);
         pageInfo.setPageSize(pageSize);
-        int totalCount = jobDao.findJobCount(key);
+        int totalCount = jobDao.findJobCount(jobName, jobRegion, jobSalary);
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
         pageInfo.setTotalPage(totalPage);
-        pageInfo.setData(jobDao.findJobs((currentPage - 1) * pageSize, pageSize, key));
+        pageInfo.setData(jobDao.findJobs((currentPage - 1) * pageSize, pageSize, jobName, jobRegion, jobSalary));
+        pageInfo.setFirstPage(currentPage == 1);
+        pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findJobs(Integer currentPage, Integer pageSize, String prefer) {
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setCurrentPage(currentPage);
+        pageInfo.setPageSize(pageSize);
+        int totalCount = jobDao.findJobUsePreferCount(prefer);
+        int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
+        pageInfo.setTotalPage(totalPage);
+        pageInfo.setData(jobDao.findJobsUsePrefer((currentPage - 1) * pageSize, pageSize, prefer));
         pageInfo.setFirstPage(currentPage == 1);
         pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
         return pageInfo;

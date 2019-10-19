@@ -12,5 +12,9 @@ public interface JobService {
 
     boolean updateJob(JobDTO job);
 
-    PageInfo findJobs(Integer currentPage, Integer pageSize, String key);
+    PageInfo findJobs(Integer currentPage, Integer pageSize,
+                      String jobName, String jobRegion, String jobSalary);
+
+
+    PageInfo findJobs(Integer currentPage, Integer pageSize, String prefer);
 }

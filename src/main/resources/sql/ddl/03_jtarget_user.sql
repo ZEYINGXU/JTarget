@@ -7,5 +7,6 @@ create table jtarget_user
   user_account varchar(255),
   user_name varchar(255),
   user_password varchar(255),
-  user_type varchar(10)
+  user_type varchar(10),
+  user_prefer varchar(100)
 );

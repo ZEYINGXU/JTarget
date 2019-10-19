@@ -49,7 +49,7 @@ public class JobController {
 
         jobService.addJob(job);
 
-        PageInfo pageInfo = jobService.findJobs(1, 10, null);
+        PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
 
         modelAndView.addObject("pageInfo", pageInfo);
         modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
@@ -83,10 +83,39 @@ public class JobController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/list/prefer")
+    public ModelAndView findJobsUsePrefer
+                                (@RequestParam(required = false) Integer currentPage,
+                                 @RequestParam(required = false) Integer pageSize,
+                                 HttpSession session, ModelAndView modelAndView) {
+
+        if (currentPage == null || currentPage < 0) {
+            currentPage = 1;
+        }
+        if (pageSize == null || pageSize < 0) {
+            pageSize = 10;
+        }
+        UserBean userBean = (UserBean) session.getAttribute("userBean");
+        PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, userBean.getUserPrefer());
+
+        modelAndView.addObject("pageInfo", pageInfo);
+        modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+        modelAndView.addObject("pageSize", pageInfo.getPageSize());
+        modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+        modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+        modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+
+        modelAndView.setViewName("jobPrefers");
+        return modelAndView;
+    }
+
+
     @GetMapping(value = "/list")
     public ModelAndView findJobs(@RequestParam(required = false) Integer currentPage,
                                  @RequestParam(required = false) Integer pageSize,
-                                 @RequestParam(required = false) String key,
+                                 @RequestParam(required = false) String jobName,
+                                 @RequestParam(required = false) String jobRegion,
+                                 @RequestParam(required = false) String jobSalary,
                                  ModelAndView modelAndView) {
 
         if (currentPage == null || currentPage < 0) {
@@ -95,7 +124,7 @@ public class JobController {
         if (pageSize == null || pageSize < 0) {
             pageSize = 10;
         }
-        PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, key);
+        PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, jobName, jobRegion, jobSalary);
 
         modelAndView.addObject("pageInfo", pageInfo);
         modelAndView.addObject("pageNum", pageInfo.getCurrentPage());

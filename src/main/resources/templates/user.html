@@ -48,37 +48,30 @@
             <h1>User INFO</h1>
         </div>
     </div>
-    <div class="container">
-        <form role="form">
-            <div class="row">
-                <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Name">
-                </div>
-                <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Region">
-                </div>
-                <div class="col-lg-2">
-                    <input type="text" class="form-control" placeholder="Job Salary">
-                </div>
-                <button type="submit" class="btn btn-default">search</button>
-            </div>
-            <h1></h1>
-        </form>
-    </div>
     <h1></h1>
 </div>
 
 <div class="container">
-    <form role="form">
+    <form role="form" action="/user/updateAction" method="post">
         <div class="form-group">
             <label for="userAccount">userAccount</label>
-            <input type="text" class="form-control" id="userAccount" th:value="${userInfo.getUserAccount()}" readonly
+            <input type="text" class="form-control" id="userAccount" name="userAccount" th:value="${userInfo.getUserAccount()}" readonly
                    placeholder="please input userAccount">
         </div>
         <div class="form-group">
             <label for="username">username</label>
-            <input type="text" class="form-control" id="username" th:value="${userInfo.getUserName()}" readonly
+            <input type="text" class="form-control" id="username" name="userName" th:value="${userInfo.getUserName()}"
                    placeholder="please input username">
+        </div>
+        <div class="form-group">
+            <label for="password">password</label>
+            <input type="password" class="form-control" id="password" name="password" value=""
+                   placeholder="please input username">
+        </div>
+        <div class="form-group">
+            <label for="userPrefer">userPrefer</label>
+            <input type="text" class="form-control" id="userPrefer" name="userPrefer" th:value="${userInfo.getUserPrefer()}"
+                   placeholder="please input userPrefer">
         </div>
         <div class="radio">
             <label >
@@ -95,7 +88,7 @@
                 <input th:if="${userInfo.getUserType().equals('3')}" type="radio" name="userType" value="3" checked>system administrator
             </label>
         </div>
-        <!--<button type="submit" class="btn btn-primary">submit</button>-->
+        <button type="submit" class="btn btn-primary">submit</button>
         <h1></h1>
         <h1></h1>
     </form>
@@ -103,25 +96,6 @@
 
 <div class="footer">
     <div class="bg-primary">
-        <div class="container">
-            <h1></h1>
-            <form role="form">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Name">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Region">
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" class="form-control" placeholder="Job Salary">
-                    </div>
-                    <button type="submit" class="btn btn-default">search</button>
-                </div>
-                <h1></h1>
-                <h1></h1>
-            </form>
-        </div>
     </div>
 </div>
 
