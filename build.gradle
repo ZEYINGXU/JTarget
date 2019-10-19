@@ -19,13 +19,9 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
 sourceSets {
     main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/java, src/main/resources'
-        }
+        resources.srcDirs = ["src/main/java", "src/main/resources"]
     }
 }
