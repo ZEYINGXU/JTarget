@@ -2,15 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>LOGIN</title>
+    <title>Job Detail</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-
-
 <div class="bg-primary">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -19,15 +17,13 @@
                     <a class="navbar-brand" href="#">JTarget</a>
                 </div>
                 <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="/register">HOME</a></li>
-                        <li><a href="/register">USER LIST</a></li>
-                        <li><a href="/register">JOB LIST</a></li>
-                        <li><a href="/register">USER LIST</a></li>
-                        <li><a href="/register">POST ONE JOB</a></li>
-                        <li><a href="/register">LOGIN</a></li>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/job/addJob">POST ONE JOB</a></li>
+                        <li><a href="/login">LOGIN</a></li>
                         <li><a href="/register">REGISTERED</a></li>
-                        <li><a href="/register">LOGOUT</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +31,7 @@
     </div>
     <div class="container">
         <div class="page-header">
-            <h1 class="text-danger">REGISTER </h1>
+            <h1>Add a Job</h1>
         </div>
     </div>
     <div class="container">
@@ -59,40 +55,39 @@
 </div>
 
 <div class="container">
-    <p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
-
-    <form role="form" method="post" action="/registerAction">
+    <form role="form" method="post" action="/job/add">
         <div class="form-group">
-            <label for="userAccount">userAccount</label>
-            <input type="text" class="form-control" id="userAccount" name="userAccount"
-                   placeholder="please input accountname">
+            <label for="region">region</label>
+            <input type="text" class="form-control" id="region" name="region"
+                   placeholder="please input job region">
         </div>
         <div class="form-group">
-            <label for="userName">userName</label>
-            <input type="text" class="form-control" id="userName" name="userName"
-                   placeholder="please input username">
+            <label for="name">name</label>
+            <input type="text" class="form-control" id="name" name="name"
+                   placeholder="please input job name">
         </div>
         <div class="form-group">
-            <label for="password">password</label>
-            <input type="password" class="form-control" id="password" name="password"
-                   placeholder="please input password">
+            <label for="salary">salary</label>
+            <input type="text" class="form-control" id="salary" name="salary"
+                   placeholder="please input salary">
         </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="userType" id="userType1" value="1" checked>job seeker
-            </label>
+        <div class="form-group">
+            <label for="contact">contact</label>
+            <input type="text" class="form-control" id="contact" name="contact"
+                   placeholder="please input contact">
         </div>
-        <div class="radio">
-            <label>
-                <input type="radio" name="userType" id="userType2" value="2">recruiter
-            </label>
+        <div class="form-group">
+            <label for="detail">detail</label>
+            <input type="text" class="form-control" id="detail" name="detail"
+                   placeholder="please input detail">
         </div>
-        <button type="submit" class="btn btn-primary">submit</button>
+        <button type="submit" class="btn btn-primary">
+            submit
+        </button>
         <h1></h1>
         <h1></h1>
     </form>
 </div>
-
 
 <div class="footer">
     <div class="bg-primary">
@@ -116,6 +111,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -20,6 +20,70 @@ public class JobDTO {
 
     private Date createDate;
 
+    public String getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getJobRegion() {
+        return jobRegion;
+    }
+
+    public void setJobRegion(String jobRegion) {
+        this.jobRegion = jobRegion;
+    }
+
+    public double getJobSalary() {
+        return jobSalary;
+    }
+
+    public void setJobSalary(double jobSalary) {
+        this.jobSalary = jobSalary;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
+    public String getJobContact() {
+        return jobContact;
+    }
+
+    public void setJobContact(String jobContact) {
+        this.jobContact = jobContact;
+    }
+
+    public String getJobDetail() {
+        return jobDetail;
+    }
+
+    public void setJobDetail(String jobDetail) {
+        this.jobDetail = jobDetail;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     @Override
     public String toString() {
         return "JobDTO{" +

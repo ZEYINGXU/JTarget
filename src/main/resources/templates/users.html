@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>User</title>
+    <title>Published job list</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
 <body>
+
 <div class="bg-primary">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -45,10 +45,11 @@
     </div>
     <div class="container">
         <div class="page-header">
-            <h1>User INFO</h1>
+            <h1>Job List</h1>
         </div>
     </div>
     <div class="container">
+
         <form role="form">
             <div class="row">
                 <div class="col-lg-2">
@@ -68,37 +69,69 @@
     <h1></h1>
 </div>
 
+
 <div class="container">
-    <form role="form">
-        <div class="form-group">
-            <label for="userAccount">userAccount</label>
-            <input type="text" class="form-control" id="userAccount" th:value="${userInfo.getUserAccount()}" readonly
-                   placeholder="please input userAccount">
-        </div>
-        <div class="form-group">
-            <label for="username">username</label>
-            <input type="text" class="form-control" id="username" th:value="${userInfo.getUserName()}" readonly
-                   placeholder="please input username">
-        </div>
-        <div class="radio">
-            <label >
-                <input th:if="${userInfo.getUserType().equals('1')}" type="radio" name="userType" value="1" checked>job seeker
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input th:if="${userInfo.getUserType().equals('2')}" type="radio" name="userType" value="2" checked>recruiter
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input th:if="${userInfo.getUserType().equals('3')}" type="radio" name="userType" value="3" checked>system administrator
-            </label>
-        </div>
-        <!--<button type="submit" class="btn btn-primary">submit</button>-->
-        <h1></h1>
-        <h1></h1>
-    </form>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>UserName</th>
+                <th>UserAccount</th>
+                <th>UserType</th>
+                <th>operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${pageInfo.data}">
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.userAccount}"></td>
+                <td th:if="${user.userType eq '1'}">
+                    job seeker
+                </td>
+                <td th:if="${user.userType eq '2'}">
+                    recruiter
+                </td>
+                <td>
+                    <a th:href="@{${'/user/update'}(userId=(${user.userId}))}">see details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a th:if="${not isFirstPage}" th:href="@{${'/user/list'}(currentPage=(${pageNum} -1),pageSize=${pageSize})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    <a th:if="${isFirstPage}" href="javascript:void(0);" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                        <span th:text="${pageNo}"></span>
+                    </a>
+
+                    <a th:if="${not (pageNum eq pageNo)}"
+                       th:href="@{${'/user/list'}(currentPage=${pageNo},pageSize=${pageSize})}">
+                        <span th:text="${pageNo}"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:if="${not isLastPage}" th:href="@{${'/user/list'}(currentPage=${pageNum+1},pageSize=${pageSize})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    <a th:if="${isLastPage}" href="javascript:void(0);" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 
 <div class="footer">
@@ -119,13 +152,10 @@
                     <button type="submit" class="btn btn-default">search</button>
                 </div>
                 <h1></h1>
-                <h1></h1>
             </form>
         </div>
     </div>
 </div>
-
-
 
 </body>
 </html>

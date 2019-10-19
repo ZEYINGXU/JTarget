@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>LOGIN</title>
@@ -9,16 +9,66 @@
 </head>
 
 <body>
+
+<div class="bg-primary">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">JTarget</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="/login">HOME</a></li>
+                        <li><a href="/login">USER LIST</a></li>
+                        <li><a href="/login">JOB LIST</a></li>
+                        <li><a href="/login">USER LIST</a></li>
+                        <li><a href="/login">POST ONE JOB</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/login">REGISTERED</a></li>
+                        <li><a href="/login">LOGOUT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="text-danger">LOGIN </h1>
+        </div>
+    </div>
+    <div class="container">
+        <form role="form">
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Name">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Region">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Salary">
+                </div>
+                <button type="submit" class="btn btn-default">search</button>
+            </div>
+            <h1></h1>
+        </form>
+    </div>
+    <h1></h1>
+</div>
+
 <div class="container">
-<form role="form">
+    <p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
+
+    <form role="form" method="get" action="/loginAction">
     <div class="form-group">
-        <label for="username">username</label>
-        <input type="text" class="form-control" id="username"
-               placeholder="please input username">
+        <label for="userAccount">user account</label>
+        <input type="text" class="form-control" id="userAccount" name="userAccount"
+               placeholder="please input user account">
     </div>
     <div class="form-group">
         <label for="password">password</label>
-        <input type="text" class="form-control" id="password"
+        <input type="password" class="form-control" id="password" name="password"
                placeholder="please input password">
     </div>
     <div class="radio">
@@ -36,8 +86,34 @@
             <input type="radio" name="userType" id="userType3" value="3">system administrator
         </label>
     </div>
-    <button type="submit" class="btn btn-default">submit</button>
+    <button type="submit" class="btn btn-primary">submit</button>
+    <h1></h1>
+    <h1></h1>
 </form>
+</div>
+
+
+<div class="footer">
+    <div class="bg-primary">
+        <div class="container">
+            <h1></h1>
+            <form role="form">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Name">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Region">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Salary">
+                    </div>
+                    <button type="submit" class="btn btn-default">search</button>
+                </div>
+                <h1></h1>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>

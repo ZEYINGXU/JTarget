@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Job Detail</title>
@@ -9,36 +9,123 @@
 </head>
 
 <body>
+<div class="bg-primary">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">JTarget</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/job/addJob">POST ONE JOB</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('3')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/user/list">USER LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>Job Detail</h1>
+        </div>
+    </div>
+    <div class="container">
+        <form role="form">
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Name">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Region">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Salary">
+                </div>
+                <button type="submit" class="btn btn-default">search</button>
+            </div>
+            <h1></h1>
+        </form>
+    </div>
+    <h1></h1>
+</div>
+
 <div class="container">
     <form role="form">
         <div class="form-group">
             <label for="region">region</label>
-            <input type="text" class="form-control" id="region"
-                   placeholder="please input job region">
+            <input type="text" class="form-control" id="region" th:value="${job.getJobRegion()}"
+                   >
         </div>
         <div class="form-group">
             <label for="name">name</label>
-            <input type="text" class="form-control" id="name"
-                   placeholder="please input job name">
+            <input type="text" class="form-control" id="name" th:value="${job.getJobName()}"
+                   >
         </div>
         <div class="form-group">
             <label for="salary">salary</label>
-            <input type="text" class="form-control" id="salary"
-                   placeholder="please input salary">
+            <input type="text" class="form-control" id="salary" th:value="${job.getJobSalary()}"
+                   >
         </div>
         <div class="form-group">
             <label for="contact">contact</label>
-            <input type="text" class="form-control" id="contact"
-                   placeholder="please input contact again">
+            <input type="text" class="form-control" id="contact" th:value="${job.getJobContact()}"
+                   >
         </div>
         <div class="form-group">
             <label for="detail">detail</label>
-            <input type="text" class="form-control" id="detail"
-                   placeholder="please input detail again">
+            <input type="text" class="form-control" id="detail" th:value="${job.getJobDetail()}"
+                   >
         </div>
-        <button type="submit" class="btn btn-default">submit</button>
+        <button th:if="${userBean.getUserType() eq '3'}" type="submit" class="btn btn-primary">
+            submit
+        </button>
+        <h1></h1>
+        <h1></h1>
     </form>
 </div>
+
+<div class="footer">
+    <div class="bg-primary">
+        <div class="container">
+            <h1></h1>
+            <form role="form">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Name">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Region">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Salary">
+                    </div>
+                    <button type="submit" class="btn btn-default">search</button>
+                </div>
+                <h1></h1>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

@@ -2,15 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>LOGIN</title>
+    <title>User</title>
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-
-
 <div class="bg-primary">
     <div class="container">
         <nav class="navbar navbar-default" role="navigation">
@@ -19,15 +17,27 @@
                     <a class="navbar-brand" href="#">JTarget</a>
                 </div>
                 <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="/register">HOME</a></li>
-                        <li><a href="/register">USER LIST</a></li>
-                        <li><a href="/register">JOB LIST</a></li>
-                        <li><a href="/register">USER LIST</a></li>
-                        <li><a href="/register">POST ONE JOB</a></li>
-                        <li><a href="/register">LOGIN</a></li>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
                         <li><a href="/register">REGISTERED</a></li>
-                        <li><a href="/register">LOGOUT</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/job/addJob">POST ONE JOB</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('3')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/user/list">USER LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +45,7 @@
     </div>
     <div class="container">
         <div class="page-header">
-            <h1 class="text-danger">REGISTER </h1>
+            <h1>User INFO</h1>
         </div>
     </div>
     <div class="container">
@@ -59,40 +69,37 @@
 </div>
 
 <div class="container">
-    <p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
-
-    <form role="form" method="post" action="/registerAction">
+    <form role="form" method="post">
         <div class="form-group">
             <label for="userAccount">userAccount</label>
-            <input type="text" class="form-control" id="userAccount" name="userAccount"
-                   placeholder="please input accountname">
+            <input type="text" class="form-control" id="userAccount" th:value="${userInfo.getUserAccount()}" readonly
+                   placeholder="please input userAccount">
         </div>
         <div class="form-group">
-            <label for="userName">userName</label>
-            <input type="text" class="form-control" id="userName" name="userName"
+            <label for="username">username</label>
+            <input type="text" class="form-control" id="username" th:value="${userInfo.getUserName()}" readonly
                    placeholder="please input username">
         </div>
-        <div class="form-group">
-            <label for="password">password</label>
-            <input type="password" class="form-control" id="password" name="password"
-                   placeholder="please input password">
-        </div>
         <div class="radio">
-            <label>
-                <input type="radio" name="userType" id="userType1" value="1" checked>job seeker
+            <label >
+                <input th:if="${userInfo.getUserType().equals('1')}" type="radio" name="userType" value="1" checked>job seeker
             </label>
         </div>
         <div class="radio">
             <label>
-                <input type="radio" name="userType" id="userType2" value="2">recruiter
+                <input th:if="${userInfo.getUserType().equals('2')}" type="radio" name="userType" value="2" checked>recruiter
             </label>
         </div>
-        <button type="submit" class="btn btn-primary">submit</button>
+        <div class="radio">
+            <label>
+                <input th:if="${userInfo.getUserType().equals('3')}" type="radio" name="userType" value="3" checked>system administrator
+            </label>
+        </div>
+        <!--<button type="submit" class="btn btn-primary">submit</button>-->
         <h1></h1>
         <h1></h1>
     </form>
 </div>
-
 
 <div class="footer">
     <div class="bg-primary">
@@ -112,10 +119,13 @@
                     <button type="submit" class="btn btn-default">search</button>
                 </div>
                 <h1></h1>
+                <h1></h1>
             </form>
         </div>
     </div>
 </div>
+
+
 
 </body>
 </html>

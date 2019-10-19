@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Published job list</title>
@@ -9,45 +9,149 @@
 </head>
 <body>
 
+<div class="bg-primary">
+    <div class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">JTarget</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('1')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('2')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/job/list">JOB LIST</a></li>
+                        <li><a href="/job/addJob">POST ONE JOB</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav" th:if="${session.userBean.getUserType().equals('3')}">
+                        <li><a th:href="@{${'/user/detail'}(userId=${session.userBean.getUserId()})}">HOME</a></li>
+                        <li><a href="/user/list">USER LIST</a></li>
+                        <li><a href="/login">LOGIN</a></li>
+                        <li><a href="/register">REGISTERED</a></li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="page-header">
+            <h1>Job List</h1>
+        </div>
+    </div>
+    <div class="container">
+
+        <form role="form">
+            <div class="row">
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Name">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Region">
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" class="form-control" placeholder="Job Salary">
+                </div>
+                <button type="submit" class="btn btn-default">search</button>
+            </div>
+            <h1></h1>
+        </form>
+    </div>
+    <h1></h1>
+</div>
+
+
 <div class="container">
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>job name</th>
-            <th>region</th>
-            <th>salary</th>
-            <th>operation</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>JAVA</td>
-            <td>shanghai</td>
-            <td>$10000</td>
-            <td><button type="button" class="btn btn-link">see details</button></td>
-        </tr>
-        <tr>
-            <td>JAVA</td>
-            <td>shanghai</td>
-            <td>$10000</td>
-            <td><button type="button" class="btn btn-link">see details</button></td>
-        </tr>
-        <tr>
-            <td>JAVA</td>
-            <td>shanghai</td>
-            <td>$10000</td>
-            <td><button type="button" class="btn btn-link">see details</button></td>
-        </tr>
-        <tr>
-            <td>JAVA</td>
-            <td>shanghai</td>
-            <td>$10000</td>
-            <td><button type="button" class="btn btn-link">see details</button></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>job name</th>
+                <th>region</th>
+                <th>salary</th>
+                <th>operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="job : ${pageInfo.data}">
+                <td th:text="${job.jobName}"></td>
+                <td th:text="${job.jobRegion}"></td>
+                <td th:text="${job.jobSalary}"></td>
+                <td>
+                    <a th:href="@{${'/job/detail'}(jobId=(${job.jobId}))}">see details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a th:if="${not isFirstPage}" th:href="@{${'/job/list'}(currentPage=(${pageNum} -1),pageSize=${pageSize})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    <a th:if="${isFirstPage}" href="javascript:void(0);" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                        <span th:text="${pageNo}"></span>
+                    </a>
+
+                    <a th:if="${not (pageNum eq pageNo)}"
+                       th:href="@{${'/job/list'}(currentPage=${pageNo},pageSize=${pageSize})}">
+                        <span th:text="${pageNo}"></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:if="${not isLastPage}" th:href="@{${'/job/list'}(currentPage=${pageNum+1},pageSize=${pageSize})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    <a th:if="${isLastPage}" href="javascript:void(0);" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
+
+<div class="footer">
+    <div class="bg-primary">
+        <div class="container">
+            <h1></h1>
+            <form role="form">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Name">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Region">
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" class="form-control" placeholder="Job Salary">
+                    </div>
+                    <button type="submit" class="btn btn-default">search</button>
+                </div>
+                <h1></h1>
+            </form>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
