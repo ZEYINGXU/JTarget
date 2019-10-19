@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.watermelon.jtarget.job.dao.JobDao">
+    <select id="findJob" resultType="com.watermelon.jtarget.job.dto.JobDTO">
+        SELECT
+          job_id,
+          job_region,
+          job_salary,
+          job_name,
+          job_contact,
+          job_detail,
+          create_by,
+          create_date
+        FROM
+          jtarget_job
+        WHERE
+          job_id = #{jobId}
+    </select>
+</mapper>

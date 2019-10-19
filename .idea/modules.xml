@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:/java课件/02-04/day18_综合案例(用户信息)/代码/day17_case/day17_case.iml" filepath="E:/java课件/02-04/day18_综合案例(用户信息)/代码/day17_case/day17_case.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demo_1.iml" filepath="$PROJECT_DIR$/demo_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jtarget.iml" filepath="$PROJECT_DIR$/jtarget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jtarget_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jtarget_main.iml" group="jtarget" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jtarget_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jtarget_test.iml" group="jtarget" />
     </modules>
   </component>
 </project>

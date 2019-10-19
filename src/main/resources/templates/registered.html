@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <form role="form">
+        <div class="form-group">
+            <label for="accountname">accountname</label>
+            <input type="text" class="form-control" id="accountname"
+                   placeholder="please input accountname">
+        </div>
+        <div class="form-group">
+            <label for="username">username</label>
+            <input type="text" class="form-control" id="username"
+                   placeholder="please input username">
+        </div>
+        <div class="form-group">
+            <label for="password">password</label>
+            <input type="text" class="form-control" id="password"
+                   placeholder="please input password">
+        </div>
+        <div class="form-group">
+            <label for="repassword">password</label>
+            <input type="text" class="form-control" id="repassword"
+                   placeholder="please input password again">
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="userType" id="userType1" value="1" checked>job seeker
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="userType" id="userType2" value="2">recruiter
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">submit</button>
+    </form>
+</div>
+
+</body>
+</html>
