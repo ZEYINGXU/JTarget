@@ -30,6 +30,16 @@ public class JobDTO {
 
     private Date createDate;
 
+    private int applyCount;
+
+    public int getApplyCount() {
+        return applyCount;
+    }
+
+    public void setApplyCount(int applyCount) {
+        this.applyCount = applyCount;
+    }
+
     public String getDomain() {
         return domain;
     }

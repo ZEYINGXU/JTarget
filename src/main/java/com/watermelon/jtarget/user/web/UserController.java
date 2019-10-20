@@ -62,6 +62,34 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/applicant")
+    public ModelAndView findApplicant(
+                                  @RequestParam String jobId,
+                                  @RequestParam(required = false) String key,
+                                  ModelAndView modelAndView) {
+
+
+        PageInfo pageInfo = userService.findApplicant(jobId, key);
+
+        modelAndView.addObject("pageInfo", pageInfo);
+        modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+        modelAndView.addObject("pageSize", pageInfo.getPageSize());
+        modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+        modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+        modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+
+        modelAndView.setViewName("applicant");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/applicantDetail")
+    public ModelAndView applicantInfo(@RequestParam String userId, ModelAndView modelAndView, HttpSession session) {
+        UserBean userInfo = userService.findUserById(userId);
+        modelAndView.addObject("userInfo", userInfo);
+        modelAndView.setViewName("applicantDetail");
+        return modelAndView;
+    }
+
     @PostMapping(value = "/add")
     public ResponseBean addUser(@RequestBody UserDTO user) {
         ResponseBean response = new ResponseBean();

@@ -122,6 +122,7 @@ public class JobController {
                                  @RequestParam(required = false) String jobName,
                                  @RequestParam(required = false) String jobRegion,
                                  @RequestParam(required = false) String jobSalary,
+                                 HttpSession session,
                                  ModelAndView modelAndView) {
 
         if (currentPage == null || currentPage < 0) {
@@ -132,6 +133,8 @@ public class JobController {
         }
         PageInfo pageInfo = jobService.findJobs(currentPage, pageSize, jobName, jobRegion, jobSalary);
 
+        UserBean userBean = (UserBean) session.getAttribute("userBean");
+
         modelAndView.addObject("pageInfo", pageInfo);
         modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
         modelAndView.addObject("pageSize", pageInfo.getPageSize());
@@ -139,8 +142,31 @@ public class JobController {
         modelAndView.addObject("totalPages", pageInfo.getTotalPage());
         modelAndView.addObject("isLastPage", pageInfo.isLastPage());
 
+        modelAndView.addObject("userBean", userBean);
         modelAndView.setViewName("jobs");
         return modelAndView;
     }
 
+    @GetMapping(value = "/apply")
+    public ModelAndView applyJob(@RequestParam String jobId,
+                                 HttpSession session,
+                                 ModelAndView modelAndView) {
+        UserBean userBean = (UserBean) session.getAttribute("userBean");
+        jobService.applyJob(jobId, userBean.getUserId());
+        PageInfo pageInfo = jobService.findJobs(1, 10, null, null, null);
+
+        modelAndView.addObject("success", "apply job success!");
+
+        modelAndView.addObject("pageInfo", pageInfo);
+        modelAndView.addObject("pageNum", pageInfo.getCurrentPage());
+        modelAndView.addObject("pageSize", pageInfo.getPageSize());
+        modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
+        modelAndView.addObject("totalPages", pageInfo.getTotalPage());
+        modelAndView.addObject("isLastPage", pageInfo.isLastPage());
+
+        modelAndView.addObject("userBean", userBean);
+
+        modelAndView.setViewName("jobs");
+        return modelAndView;
+    }
 }

@@ -3,6 +3,7 @@ package com.watermelon.jtarget.user.service.impl;
 import com.watermelon.jtarget.common.pager.PageInfo;
 import com.watermelon.jtarget.common.util.Md5Utils;
 import com.watermelon.jtarget.common.util.UUIDUtils;
+import com.watermelon.jtarget.job.dao.JobDao;
 import com.watermelon.jtarget.user.dao.UserDao;
 import com.watermelon.jtarget.user.dto.UserDTO;
 import com.watermelon.jtarget.user.service.UserService;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private JobDao jobDao;
 
     @Autowired
     private UUIDUtils uuidUtils;
@@ -95,6 +99,15 @@ public class UserServiceImpl implements UserService {
         pageInfo.setData(userDao.findUsers((currentPage - 1) * pageSize, pageSize, key));
         pageInfo.setFirstPage(currentPage == 1);
         pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findApplicant(String jobId, String key) {
+        PageInfo pageInfo = new PageInfo();
+
+        pageInfo.setData(jobDao.findApplicant(jobId, key));
+
         return pageInfo;
     }
 

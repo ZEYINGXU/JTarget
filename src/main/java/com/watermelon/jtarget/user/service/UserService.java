@@ -21,4 +21,6 @@ public interface UserService {
     boolean userLogin(String userAccount, String password, String userType);
 
     PageInfo findUsers(Integer currentPage, Integer pageSize, String key);
+
+    PageInfo findApplicant(String jobId, String key);
 }

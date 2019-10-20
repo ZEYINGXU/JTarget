@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jtarget.iml" filepath="$PROJECT_DIR$/jtarget.iml" group="jtarget" />
+      <module fileurl="file://$PROJECT_DIR$/jtarget.iml" filepath="$PROJECT_DIR$/jtarget.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jtarget_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jtarget_main.iml" group="jtarget" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jtarget_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jtarget_test.iml" group="jtarget" />
     </modules>

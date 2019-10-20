@@ -155,4 +155,72 @@
               )
           </if>
     </select>
+
+    <insert id="insertJobApply">
+        INSERT INTO jtarget_apply
+        (
+          apply_id,
+          job_id,
+          user_id
+        )
+        VALUES
+        (
+          #{applyId},
+          #{jobId},
+          #{userId}
+        )
+    </insert>
+
+    <select id="findApplyCount" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        FROM
+          jtarget_apply
+        WHERE
+          job_id = #{jobId}
+    </select>
+
+    <select id="findApplicantCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM
+        jtarget_user ju INNER JOIN jtarget_apply ja
+        ON ju.user_id = ja.user_id
+        <where>
+            ju.user_type != '3'
+            <if test="key != null and key != ''.toString()">
+                AND  (
+                ju.user_account CONCAT('%', #{key}, '%')
+                OR ju.user_name CONCAT('%', #{key}, '%')
+                OR ju.user_type CONCAT('%', #{key}, '%')
+                )
+            </if>
+        </where>
+    </select>
+
+    <select id="findApplicant" resultType="com.watermelon.jtarget.user.dto.UserDTO">
+        SELECT
+        ju.user_id userId,
+        ju.user_account userAccount,
+        ju.user_name userName,
+        ju.user_type userType,
+        ju.domain domain,
+        ju.profession profession,
+        ju.experience experience,
+        ju.soft_skills softSkills
+        FROM
+        jtarget_user ju INNER JOIN jtarget_apply ja
+        ON ju.user_id = ja.user_id
+        <where>
+            ju.user_type != '3'
+            <if test="key != null and key != ''.toString()">
+                AND (
+                ju.user_account CONCAT('%', #{key}, '%')
+                OR ju.user_name CONCAT('%', #{key}, '%')
+                OR ju.user_type CONCAT('%', #{key}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY ju.user_id ASC
+    </select>
 </mapper>

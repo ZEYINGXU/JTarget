@@ -126,6 +126,9 @@
         <button th:if="${userBean.getUserType() eq '3'}" type="submit" class="btn btn-primary">
             submit
         </button>
+        <a th:if="${userBean.getUserType() eq '1'}" class="btn btn-primary" th:href="@{${'/job/apply'}(jobId=${job.getJobId()})}">
+            apply this job
+        </a>
         <h1></h1>
         <h1></h1>
     </form>

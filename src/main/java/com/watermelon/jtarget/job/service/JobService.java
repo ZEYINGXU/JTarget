@@ -18,4 +18,6 @@ public interface JobService {
 
 
     PageInfo findJobs(Integer currentPage, Integer pageSize, UserBean userBean, String key);
+
+    boolean applyJob(String jobId, String userId);
 }

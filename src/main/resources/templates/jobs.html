@@ -71,6 +71,7 @@
 
 <div class="container">
     <div class="table-responsive">
+        <p style="color: green" th:text="${success}" th:if="${not #strings.isEmpty(success)} "></p>
         <p style="color: red" th:text="${error}" th:if="${not #strings.isEmpty(error)} "></p>
         <table class="table">
             <thead>
@@ -93,6 +94,9 @@
                 <!--<td th:text="${job.jobSalary}"></td>-->
                 <td>
                     <a th:href="@{${'/job/detail'}(jobId=(${job.jobId}))}">see details</a>
+                    <br>
+                    <a th:if="${userBean.getUserType() eq '2'}" th:href="@{${'/user/applicant'}(jobId=${job.getJobId()})}" th:text="'Number of applicants:' + ${job.getApplyCount()}">
+                    </a>
                 </td>
             </tr>
             </tbody>

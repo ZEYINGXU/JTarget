@@ -27,7 +27,9 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobDTO findJob(String jobId) {
-        return jobDao.findJob(jobId);
+        JobDTO job = jobDao.findJob(jobId);
+        job.setApplyCount(jobDao.findApplyCount(jobId));
+        return job;
     }
 
     @Override
@@ -55,7 +57,9 @@ public class JobServiceImpl implements JobService {
         int totalCount = jobDao.findJobCount(jobName, jobRegion, jobSalary);
         int totalPage = totalCount % pageSize == 0 ? totalCount / pageSize : totalCount / pageSize + 1;
         pageInfo.setTotalPage(totalPage);
-        pageInfo.setData(jobDao.findJobs((currentPage - 1) * pageSize, pageSize, jobName, jobRegion, jobSalary));
+        List<JobDTO> jobs = jobDao.findJobs((currentPage - 1) * pageSize, pageSize, jobName, jobRegion, jobSalary);
+        jobs.stream().forEach(job -> job.setApplyCount(jobDao.findApplyCount(job.getJobId())));
+        pageInfo.setData(jobs);
         pageInfo.setFirstPage(currentPage == 1);
         pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
         return pageInfo;
@@ -69,21 +73,18 @@ public class JobServiceImpl implements JobService {
         List<JobPreferDTO> jobs = jobDao.findAllJobs(key);
 
         for (JobPreferDTO job : jobs) {
-            int domain_weight = 10;
-            int profession_weight = 100;
-            int experience_weight = 2;
             int weight = 0;
             if (!StringUtils.isEmpty(userBean.getDomain())
                     && userBean.getDomain().contains(job.getDomain())) {
-                weight = weight + domain_weight;
+                weight++;
             }
             if (!StringUtils.isEmpty(userBean.getProfession())
                     && userBean.getProfession().contains(job.getProfession())) {
-                weight = weight + profession_weight;
+                weight++;
             }
             if (job.getExperienceMin() <= userBean.getExperience()
                     && job.getExperienceMax() >= userBean.getExperience()) {
-                weight = userBean.getExperience() + weight;
+                weight++;
             }
             job.setWeights(weight);
         }
@@ -98,6 +99,12 @@ public class JobServiceImpl implements JobService {
         pageInfo.setFirstPage(currentPage == 1);
         pageInfo.setLastPage(currentPage == pageInfo.getTotalPage());
         return pageInfo;
+    }
+
+    @Override
+    public boolean applyJob(String jobId, String userId) {
+        int result = jobDao.insertJobApply(uuidUtils.generate(), jobId, userId);
+        return result > 0;
     }
 
 

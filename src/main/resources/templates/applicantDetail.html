@@ -60,59 +60,21 @@
             <input type="text" class="form-control" id="username" name="userName" th:value="${userInfo.getUserName()}"
                    placeholder="please input username">
         </div>
-        <div class="form-group">
-            <label for="password">password</label>
-            <input type="password" class="form-control" id="password" name="password" value=""
-                   placeholder="please input new password">
-        </div>
 
-        <div class="radio">
-            <label >
-                <input th:if="${userInfo.getUserType().equals('1')}" type="radio" name="userType" value="1" checked>job seeker
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input th:if="${userInfo.getUserType().equals('2')}" type="radio" name="userType" value="2" checked>recruiter
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input th:if="${userInfo.getUserType().equals('3')}" type="radio" name="userType" value="3" checked>system administrator
-            </label>
-        </div>
         <div class="form-group">
             <label for="domain">classification</label>
-            <select class="form-control" id="domain" name="domain">
-                <option value="Accounting">Accounting</option>
-                <option value="Information Technology">Information Technology</option>
-                <option value="Education">Education</option>
-            </select>
+            <input class="form-control" id="domain" name="domain" th:value="${userInfo.getDomain()}">
         </div>
         <div class="form-group">
             <label for="profession">category</label>
-            <select class="form-control" id="profession" name="profession">
-                <option value="Financial Accounting">Financial Accounting</option>
-                <option value="Corporate Advisory">Corporate Advisory</option>
-                <option value="Business Services">Business Services</option>
+            <input class="form-control" id="profession" name="profession" th:value="${userInfo.getProfession()}">
 
-                <option value="Systems Analysts">Systems Analysts</option>
-                <option value="Developers">Developers</option>
-                <option value="Project Management">Project Management</option>
-
-                <option value="Childcare">Childcare</option>
-                <option value="Teaching-Primary">Teaching-Primary</option>
-                <option value="Teaching-Secondary">Teaching-Secondary</option>
-            </select>
         </div>
         <div class="form-group">
             <label for="experience">experience value</label>
             <input type="text" class="form-control" id="experience" name="experience" th:value="${userInfo.getExperience()}"
                    placeholder="please input experience value">
         </div>
-        <button type="submit" class="btn btn-primary">
-            submit
-        </button>
         <h1></h1>
         <h1></h1>
     </form>
