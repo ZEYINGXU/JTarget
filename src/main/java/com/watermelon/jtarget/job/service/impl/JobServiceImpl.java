@@ -87,7 +87,7 @@ public class JobServiceImpl implements JobService {
             }
             if (job.getExperienceMin() <= userBean.getExperience()
                     && job.getExperienceMax() >= userBean.getExperience()) {
-                weight+=experience;
+                weight+=experience*userBean.getExperience();
             }
             job.setWeights(weight);
         }
