@@ -95,7 +95,7 @@
                 <td>
                     <a th:href="@{${'/job/detail'}(jobId=(${job.jobId}))}">see details</a>
                     <br>
-                    <a th:if="${userBean.getUserType() eq '2'}" th:href="@{${'/user/applicant'}(jobId=${job.getJobId()})}" th:text="'Number of applicants:' + ${job.getApplyCount()}">
+                    <a th:if="${session.userBean.getUserType() eq '2'}" th:href="@{${'/user/applicant'}(jobId=${job.getJobId()})}" th:text="'Number of applicants:' + ${job.getApplyCount()}">
                     </a>
                 </td>
             </tr>

@@ -61,7 +61,7 @@ public class JobController {
         modelAndView.addObject("isFirstPage", pageInfo.isFirstPage());
         modelAndView.addObject("totalPages", pageInfo.getTotalPage());
         modelAndView.addObject("isLastPage", pageInfo.isLastPage());
-
+        modelAndView.addObject("session", session);
         modelAndView.setViewName("jobs");
         return modelAndView;
     }
